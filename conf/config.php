@@ -30,14 +30,17 @@
 
 	$log_file = $_ENV['RU_LOG_FILE'] ?? '/tmp/errors.log'; // path to log file (comment or leave blank to disable logging)
 
-	$saveUploadedTorrents = true;		// Save uploaded torrents to profile/torrents directory or not
+	$saveUploadedTorrents = false;		// Save uploaded torrents to profile/torrents directory or not
 	$overwriteUploadedTorrents = false;	// Overwrite existing uploaded torrents in profile/torrents directory or make unique name
 
 	$topDirectory = $_ENV['RU_TOP_DIR'] ?? '/';			// Upper available directory. Absolute path with trail slash.
 	$forbidUserSettings = false;
 
-	$scgi_port = $_ENV['RU_SCGI_PORT'] ?? 5000;
-	$scgi_host = $_ENV['RU_SCGI_HOST'] ?? "127.0.0.1";
+	// Followings settings are specified for each users/*/ folder
+
+	// php -> rtorrent (tcp)
+	//$scgi_port = $_ENV['RU_SCGI_PORT'] ?? 5000;
+	//$scgi_host = $_ENV['RU_SCGI_HOST'] ?? "127.0.0.1";
 
 	// For web->rtorrent link through unix domain socket
 	// (scgi_local in rtorrent conf file), change variables
@@ -46,7 +49,8 @@
 	// $scgi_port = 0;
 	// $scgi_host = "unix:///tmp/rpc.socket";
 
-	$XMLRPCMountPoint = "/RPC2";		// DO NOT DELETE THIS LINE!!! DO NOT COMMENT THIS LINE!!!
+	// www -> rtorrent (mandatory)
+	//$XMLRPCMountPoint = "/RPC2";		// DO NOT DELETE THIS LINE!!! DO NOT COMMENT THIS LINE!!!
 
 	$throttleMaxSpeed = 327625*1024;	// DO NOT EDIT THIS LINE!!! DO NOT COMMENT THIS LINE!!!
 	// Can't be greater then 327625*1024 due to limitation in libtorrent ResourceManager::set_max_upload_unchoked function.
@@ -76,7 +80,7 @@
     getenv("RU_LOCALHOSTS") && $localhosts[] = $_ENV['RU_LOCALHOSTS'];
 
 	$profilePath = $_ENV['RU_PROFILE_PATH'] ?? '../../share';		// Path to user profiles
-	$profileMask = $_ENV['RU_PROFILE_MASK'] ?? 0777;			// Mask for files and directory creation in user profiles.
+	$profileMask = $_ENV['RU_PROFILE_MASK'] ?? 0770;			// Mask for files and directory creation in user profiles.
 						// Both Webserver and rtorrent users must have read-write access to it.
 						// For example, if Webserver and rtorrent users are in the same group then the value may be 0770.
 
